@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>desinger tesk1</title>
+	<style>
+		.title{
+			transition: border-bottom 1s linear 2s;
+			width:140px;
+			color:rgb(82,108,185);
+			text-align: center;
+		}
+		.toggle{
+			position: relative;
+			left:15px;
+			border-radius: 5px;
+			background-color: white;
+			box-shadow: 1px 1px 1px;
+		}
+		.active{
+			border-bottom: 2px solid blue;
+		}
+		.border-bottom{
+			width:0px;
+			height: 15px;
+			position: relative;
+			top:-10px;
+			margin:0 auto;
+			background-color: rgb(82,108,185);
+			transition: width 2s;
+		}
+	</style>
+</head>
+<body>
+	<div class="title">
+		<h1>前端学院</h2>
+		<div class="border-bottom"></div>
+	</div>
+	<div>
+		<button class="toggle">点击切换样式</button>
+	</div>
+	<script type="text/javascript">
+		(function(){
+			let toggle = document.getElementsByClassName("toggle")[0],
+				borderBottom = document.getElementsByClassName("border-bottom")[0];
+
+			let flag = true;
+
+			toggle.onclick = function(){
+				if(flag){
+					flag = false;
+					borderBottom.setAttribute("style","width:60px;");
+				}else{
+					flag = true;
+					borderBottom.setAttribute("style","width:0px;");
+				}
+			}
+
+		})()
+	</script>
+</body>
+</html>
