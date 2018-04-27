@@ -13,9 +13,18 @@ var MyApp = san.defineComponent({
         }
     },
     messages:{
-        "checkbox-changed":function (msg) {
-            console.log(msg);
+        "checkbox-add":function (msg) {
+            this.data.push("data",msg.value);
+        },
+        "checkbox-sub":function (msg) {
+            let data = this.data.get('data');
+            let index = data.indexOf(msg.value);
+
+            this.data.removeAt('data',index);
         }
+    },
+    updated(){
+
     }
 });
 export default MyApp;

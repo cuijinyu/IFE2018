@@ -38,7 +38,6 @@ var MyApp = san.defineComponent({
         }
     },
     dealChange:function(e){
-        this.dispatch("checkbox-changed",this.data.get('checked'));
         this.fire('change',e);
     },
     svgClick:function () {
@@ -50,13 +49,22 @@ var MyApp = san.defineComponent({
         }else if(this.data.get('falseValue')!==""&&temp){
             this.data.set("checked",this.data.get('falseValue'));
         }
-        console.log(this.data.get("checked"))
     },
     indeterminateClick:function () {
         this.data.set("indeterminate",undefined);
         this.data.set("checked",true);
         if(this.data.get('trueValue')!==""){
             this.data.set("checked",this.data.get('trueValue'));
+        }
+    },
+    updated(){
+        const checked = this.data.get("checked");
+        if(checked){
+            this.dispatch("checkbox-add",this.data.get('checked'));
+        }else{
+            if(this.data.get("trueValue")!==''){
+                this.dispatch("checkbox-sub",this.data.get('trueValue'));
+            }
         }
     }
 });
