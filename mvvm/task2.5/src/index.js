@@ -1,10 +1,15 @@
 import san,{DataTypes} from 'san';
 import sanCheckbox from './san-checkbox.js';
 import sanInput from './san-input';
+import sanCheckGroup from './san-check-group';
 var MyApp = san.defineComponent({
     template: `<div>
     <san-checkbox></san-checkbox>
     <san-input></san-input>
+    <san-check-group>
+        <san-checkbox trueValue="1234"></san-checkbox>
+        <san-checkbox trueValue="2345"></san-checkbox>
+    </san-check-group>
 </div>`,
     initData:function () {
         return{
@@ -18,7 +23,8 @@ var MyApp = san.defineComponent({
     },
     components:{
         'san-checkbox':sanCheckbox,
-        'san-input':sanInput
+        'san-input':sanInput,
+        'san-check-group':sanCheckGroup
     },
     messages:{
         "msg":function (msg) {

@@ -2,7 +2,7 @@ import san from 'san';
 var MyApp = san.defineComponent({
     template: `
                 <div>
-                <style>
+                <style scoped>
                     .san-checkbox{
                         display:none
                     }
@@ -38,6 +38,7 @@ var MyApp = san.defineComponent({
         }
     },
     dealChange:function(e){
+        this.dispatch("checkbox-changed",this.data.get('checked'));
         this.fire('change',e);
     },
     svgClick:function () {
