@@ -1,0 +1,17 @@
+.san-button{
+   width:20px;
+   height: 20px;
+   border-radius:50px;
+   border:0px solid rgba(0,0,0,0.5);
+   background: white;
+}
+.san-button img{
+   transition: 0.3s all;
+   width: 15px;
+   height: 15px;
+   position: relative;
+   left:-4px;
+}
+.san-button:hover{
+   background: beige;
+}
