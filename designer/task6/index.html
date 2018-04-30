@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>designer task6</title>
+	<style>
+		.slider{
+			width:1080px;
+			margin:0 auto;
+		}
+		.img-show{
+			width: 1080px;
+			margin:0 auto;
+		}
+		.img-show img{
+			width:960px;
+			height: 600px;
+			display: none;
+		}
+		#show{
+			display: inline-block;
+		}
+		.img-thumbnail{
+			position: relative;
+			top:-180px;
+			width:1080px;
+			margin:0 auto;
+			padding-left:25px;
+		}
+		.img-thumbnail img{
+			width: 170px;
+			height: 130px;
+			transition: all 0.5s;
+			margin-right: 10px;
+		}
+		.img-thumbnail img:hover{
+			transform: scale(1.1,1.1);
+		}
+		.pic1{
+			position: relative;
+			transition: 0.5s all ease-out;
+			animation: pic1Ani 0.5s ease-out;
+		}
+		.pic2{
+			position: relative;
+			transition: 0.5s all ease-out;
+			animation: pic2Ani 0.5s ease-out;
+		}
+		.pic3{
+			position: relative;
+			transition: 1s all ease-in;
+			animation: pic3Ani 1s ease-in;
+		}
+		.pic4{
+			position: relative;
+			transition: 1s all ease-out;
+			animation: pic4Ani 1s ease-out;
+		}
+		.pic5{
+			transition: 0.7s all ease-in-out;
+			animation: pic5Ani 0.7s ease-in-out;
+		}
+		@keyframes pic1Ani{
+			0%{
+				left:-500px;
+			}
+			100%{
+				left:0px;
+			}
+		}
+		@keyframes pic2Ani{
+			0%{
+				top:350px;
+			}
+			100%{
+				top:0px;
+			}
+		}
+		@keyframes pic3Ani{
+			0%{
+				transform: scale(0.1,0.1);
+			}
+			100%{
+				transform: scale(1.0,1.0);
+			}
+		}
+		@keyframes pic4Ani{
+			0%{
+				transform: scale(2.0,2.0);
+			}
+			100%{
+				transform: scale(1.0,1.0);
+			}
+		}
+		@keyframes pic5Ani{
+			0%{
+				transform: rotate(-360deg) scale(0.1,0.1);
+			}
+			100%{
+				transform: rotate(0deg) scale(1.0,1.0);
+			}
+		}
+	</style>
+</head>
+<body>
+		<div class="slider">
+			<div class="img-show">
+				<img src="img/58213ac79a12c.jpg" alt="" class="pic1" id="show">
+				<img src="img/1104231941a49c85c7a72a952d.jpg" alt="" class="pic2">
+				<img src="img/1134975918a8e8de3bo.jpg" alt="" class="pic3">
+				<img src="img/Masherbrum Karakoram Mountains Pakistan.jpg" alt="" class="pic4">
+				<img src="img/timg.jpg" alt="" class="pic5">
+			</div>
+			<div class="img-thumbnail">
+				<img src="img/58213ac79a12c.jpg" alt="">
+				<img src="img/1104231941a49c85c7a72a952d.jpg" alt="">
+				<img src="img/1134975918a8e8de3bo.jpg" alt="">
+				<img src="img/Masherbrum Karakoram Mountains Pakistan.jpg" alt="">
+				<img src="img/timg.jpg" alt="">
+			</div>
+		</div>
+		<script>
+			const showPics = [...document.querySelectorAll(".img-show img")];
+			const thumbnailPics = [...document.querySelectorAll(".img-thumbnail img")];
+
+			function getIndex() {
+				// body...
+				for(let i = 0;i < showPics.length;i++){
+					if(showPics[i].getAttribute('id') == 'show'){
+						return i;
+					}
+				}
+			}
+
+			/*给每一个图片绑定一个事件*/
+			for(let i = 0;i < thumbnailPics.length;i++){
+				thumbnailPics[i].onmouseenter = ()=>{
+					let index = getIndex();
+					showPics[index].setAttribute("id",null);
+					index = i;
+					showPics[index].setAttribute("id","show");
+				}
+			}
+
+			/* 轮播功能 */
+			setInterval(()=>{
+				let index = getIndex();
+				showPics[index].setAttribute("id",null);
+					if(index == 4){
+						index = 0;
+					}else{
+						index ++ ;
+					}
+				showPics[index].setAttribute("id","show");
+			},3000);
+		</script>
+</body>
+</html>
