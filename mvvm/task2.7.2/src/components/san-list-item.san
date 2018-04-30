@@ -1,0 +1,41 @@
+<template>
+    <div class="san-list-item">
+        <li on-click="dealClick($event)"><slot name="content"></slot></li>
+    </div>
+</template>
+
+<script>
+    import {transition} from 'san-transition';
+    export default {
+        initData () {
+            return {
+                msg: 'world',
+            };
+        },
+        transition:transition('slide'),
+        dealClick(e){
+            this.fire('click',e);
+        }
+    }
+</script>
+
+<style scoped>
+    .slide-enter, .slide-leave {
+        transition: all .5s;
+    }
+    .slide-enter, .slide-before-leave {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    .slide-before-enter, .slide-leave {
+        opacity: 0;
+        transform: translate(100px, 0);
+    }
+    .san-list-item li{
+        border-bottom:1px solid rgba(0,0,0,0.3);
+        list-style: none;
+        padding-left:10px;
+        padding-top:5px;
+        padding-bottom:5px;
+    }
+</style>

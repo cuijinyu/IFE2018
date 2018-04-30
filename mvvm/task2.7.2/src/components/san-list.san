@@ -1,0 +1,38 @@
+<template>
+    <div class="san-list">
+        <div s-for="p,index in info">
+            <san-list-item s-if="{{p.show}}" on-click="notShow(index)"><span slot="content">{{p.val}}</span></san-list-item>
+        </div>
+    </div>
+</template>
+
+<script>
+    import sanListItem from "./san-list-item.san";
+    export default {
+        initData () {
+            return {
+                msg: 'world',
+                show:true,
+                info:[]
+            };
+        },
+        components:{
+            'san-list-item':sanListItem
+        },
+        notShow(index){
+            this.data.set(`info[${index}].show`,false);
+            this.dispatch('message',this.data.get(`info[${index}].val`));
+        }
+    }
+</script>
+
+<style scoped>
+    .san-list{
+        border:1px solid rgba(0,0,0,0.3);
+        border-radius:3px;
+        border-bottom: 0px;
+    }
+    .san-list-item:last-child{
+        border:0px;
+    }
+</style>
