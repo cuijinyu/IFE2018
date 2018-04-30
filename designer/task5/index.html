@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task5</title>
+	<style>
+		#stage{
+			width:600px;
+			height: 400px;
+			background-color: black;
+			margin:0 auto;
+			perspective: 800px;
+		}
+		.cube div{
+			position: absolute;
+			left:100px;
+			top:40px;
+			width:300px;
+			height: 300px;
+			line-height: 300px;
+			border:2px solid blue;
+			background-color: rgba(0,0,0,0);
+
+		}
+		#left{
+			transform: rotateY(90deg);
+			transform-origin: left;
+		}
+		#right{
+			transform:rotateY(270deg);
+			transform-origin: right;
+		}
+		#front{
+			transform:translateZ(0px);
+		}
+		#end{
+			transform: translateZ(-300px);
+		}
+		#top{
+			transform: rotateX(-90deg);
+			transform-origin: top;
+		}
+		#bottom{
+			transform: rotateX(90deg);
+			transform-origin: bottom;
+		}
+		@keyframes rotate{
+			0%{
+				tranform:rotateY(0deg);
+			}
+			20%{
+				tranform:rotateY(72deg);	
+			}
+			40%{
+				tranform:rotateY(144deg);	
+			}
+			60%{
+				tranform:rotateY(216deg);	
+			}
+			80%{
+				tranform:rotateY(288deg);	
+			}
+			100%{
+				transform:rotateY(360deg);
+			}
+		}
+		.cube{
+			transform-style: preserve-3d;
+			transform-origin: 50% 50% -100px;
+		}
+		.cube:hover{
+			animation: rotate 2s;
+		}
+	</style>
+</head>
+<body>
+	<div id="stage">
+		<div class="cube">
+			<div id="top"></div>
+			<div id="bottom"></div>
+			<div id="left"></div>
+			<div id="right"></div>
+			<div id="front"></div>
+			<div id="end"></div>
+		</div>
+	</div>
+</body>
+</html>
