@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>我是绝对定位法的三栏布局</title>
+        <style>
+            *{
+                margin:0;
+                padding:0;
+            }
+            .main{
+                margin-left:200px;
+                width:600px;
+                height: 600px;
+                background: lightgreen;
+            }
+            .main{
+                margin-right:calc(100% - 800px);
+            }
+            .left{
+                position:absolute;
+                left:0;
+                width:200px;
+                height: 600px;
+                top:0px;
+                background: red;
+            }
+            .right{
+                width:calc(100% - 800px);
+                position:absolute;
+                right:0;
+                top:0px;
+                height: 600px;
+                background: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="left">
+
+        </div>
+        <div class="main">
+
+        </div>
+        <div class="right">
+
+        </div>
+    </body>
+</html>
