@@ -4,14 +4,24 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+        *{
+            margin:0;
+            padding:0;
+        }
         .wrap{
-
+            display:grid;
+            grid-template-columns:30% 70%;
+            grid-template-rows: 600px;
         }
         .left{
-
+            grid-column-start: 1;
+            grid-column-end:1;
+            background: red;
         }
         .right{
-
+            grid-column-start: 2;
+            grid-column-end: 2;
+            background: blue;
         }
     </style>
 </head>
