@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .warp{
+            /*父元素要清楚浮动*/
+            width:100%;
+            height: 600px;
+            overflow: auto;
+        }
+        .left{
+            float: left;
+            background: blue;
+            height: 100%;
+            width:30%;
+        }
+        .right{
+            float: left;
+            height: 100%;
+            background: red;
+        }
+        .warp .right{
+            /*计算右侧的宽度*/
+            width:calc(100% - 30%);
+        }
+    </style>
+</head>
+<body>
+    <div class="warp">
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+</body>
+</html>
