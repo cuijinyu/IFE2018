@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flex三列布局</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .wrap{
+            display: flex;
+            height: 600px;
+            width:100%;
+        }
+        .header{
+            height: 100px;
+            width:100%;
+            background: blanchedalmond;
+        }
+        .footer{
+            height: 100px;
+            width:100%;
+            background: aqua;
+        }
+        .left{
+            flex:0 0 auto;
+            width:200px;
+            height: 600px;
+            background: red;
+        }
+        .main{
+            flex:1 1 auto;
+            width:calc(100% - 400px);
+            height: 600px;
+            background: lightgreen;
+        }
+        .right{
+            flex:2 2 auto;
+            width:200px;
+            height: 600px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="header"></div>
+    <div class="wrap">
+        <div class="left"></div>
+        <div class="main"></div>
+        <div class="right"></div>
+    </div>
+    <div class="footer"></div>
+</body>
+</html>
