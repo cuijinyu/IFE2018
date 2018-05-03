@@ -1,8 +1,8 @@
 import './asserts/style/common.css';
 import san,{DataTypes} from 'san';
-import sanCheckbox from './components/san-checkbox.js';
-import sanInput from './components/san-input.js';
-import sanCheckGroup from './components/san-check-group.js';
+import sanCheckbox from './components/san-checkbox.san';
+import sanInput from './components/san-input.san';
+import sanCheckGroup from './components/san-check-group.san';
 var MyApp = san.defineComponent({
     template: `<div>
     <san-checkbox></san-checkbox>
