@@ -1,29 +1,28 @@
+import './asserts/style/common.css';
 import san,{DataTypes} from 'san';
-import sanCheckbox from './san-checkbox.js';
-import sanInput from './san-input';
-import sanCheckGroup from './san-check-group';
+import sanCheckbox from './components/san-checkbox.js';
+import sanInput from './components/san-input.js';
+import sanCheckGroup from './components/san-check-group.js';
 var MyApp = san.defineComponent({
     template: `<div>
     <san-checkbox></san-checkbox>
-    <san-input></san-input>
-    <san-check-group>
+    <san-input textarea></san-input>
+    <san-check-group data="{=data=}">
         <san-checkbox trueValue="1234"></san-checkbox>
         <san-checkbox trueValue="2345"></san-checkbox>
     </san-check-group>
+    我是复选框，我的值是：{{data}}
+    <san-input></san-input>
 </div>`,
     initData:function () {
         return{
            isRed:true,
-            msg:""
+            data:[]
         }
     },
-    changeColor(){
-        let isRed = this.data.get("isRed");
-        this.data.set("isRed",!isRed);
-    },
     components:{
-        'san-checkbox':sanCheckbox,
         'san-input':sanInput,
+        'san-checkbox':sanCheckbox,
         'san-check-group':sanCheckGroup
     },
     messages:{
