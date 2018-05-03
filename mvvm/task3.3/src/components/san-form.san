@@ -1,0 +1,87 @@
+<template>
+    <div class="san-form">
+        <slot></slot>
+    </div>
+</template>
+
+<script>
+    export default {
+        initData:function () {
+            return{
+                formModel:undefined,
+                formItem:[],
+                labelWidth:undefined,
+                rules:{},
+                labelPosition:undefined,//标签位置，可能为三个值left、top或者为right
+            }
+        },
+        validate(){
+            /**
+             *
+             * 表单验证
+             *
+             */
+            this.data.get('formItem').forEach(ele=>{
+                ele.validate();
+            })
+
+
+        },
+        attached(){
+              this.data.get('formItem').forEach(ele=>{
+
+                  if(this.data.get('labelPosition')!== undefined){
+                      ele.data.set('labelPosition',this.data.get('labelPosition'));
+                  }
+
+                  if(this.data.get('labelWidth')!==undefined){
+                      ele.data.set('labelWidth',this.data.get('labelWidth'));
+                  }
+
+              })
+        },
+        validateField(prop){
+            /**
+             *
+             * 验证表单的单一控件，prop为item的字段
+             *
+             */
+            this.data.get('formItem').forEach(ele=>{
+                if(ele.data.get('prop') == prop){
+                    ele.validate();
+                }
+            })
+        },
+        resetFields(){
+            /**
+             *
+             * 重置表单
+             *
+             */
+            this.data.get('formItem').forEach(ele=>{
+                ele.reset();
+            })
+
+        },
+        messages:{
+            'init-form-item':function (message) {
+                /**
+                 * 当表单元素初始化的时候，将该元素加入formItem数组中
+                 */
+
+                this.data.push('formItem',message.value);
+            },
+            'delete-form-item':function (message) {
+                /**
+                 * 当表单内容改变时，通知父组件改变
+                 */
+                let index = this.data.get('formItem').indexOf(message.value);
+                this.data.slice('formItem',index,1);
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>

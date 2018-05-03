@@ -1,0 +1,153 @@
+<template>
+    <div class="san-form-item">
+        <div class="san-form-label-wrap san-form-label-{{labelPosition}}"
+             style="width:{{labelWidth}}">
+            <label class="san-form-label">
+                <span s-if="require" class="san-form-required">*</span>
+                {{label}}
+            </label>
+        </div>
+        <div class="san-form-input">
+            <slot></slot>
+        </div>
+        <div>
+
+        </div>
+    </div>
+</template>
+
+<script>
+    import schema from 'async-validator';
+    export default {
+        initData:function () {
+            return{
+                labelPosition:"left",//标签位置，默认为left
+                label:"",
+                labelWidth:"80px",
+                prop:"",//formModel中的字段
+                require:false,//是否必填项
+                helpText:"",//帮助信息
+                rules:undefined,
+                validateState:true,//验证状态
+                error:undefined,//错误信息，外部传入，改变组件状态，仅作提示
+                value:"",//slot中的input表单值
+                form:undefined,//将父组件form存放于这里
+                validateStatus:'notValidated',//验证状态，默认为为验证
+                success:true,//表单正确状态，默认为true，用以判断样式
+            }
+        },
+        created(){
+            /**
+             *  当form-item被附加到页面时，向父组件发送自己的信息
+             */
+            if(this.data.get('prop') == ''){
+                throw "Please give the form item a prop"
+            }
+            this.dispatch('init-form-item',this);
+            this.getForm();
+        },
+
+        validate(){
+            this.data.set('validateStatus','validatePause');
+            let value = this.getPropValue(this.data.get('prop')),
+                rule = this.getRules();
+
+            let label = this.data.get('prop');
+            let descriptor = {};
+
+            descriptor[label] = rule;
+
+            let validator = new schema(descriptor),
+                input = {};
+
+            input[label] = this.getPropValue(this.data.get('prop'));
+
+            validator.validate(input,(error,fields)=>{
+
+                if(error){
+                    console.log(error);
+                    this.data.set('validateStatus','validateWrong');
+                }else{
+                    this.data.set('validateStatus','validateSuccess');
+                }
+
+            })
+
+        },
+
+        /**
+         * 获取slot中的input的值
+         * @param prop
+         * @returns {*|string}
+         */
+        getPropValue(prop){
+            this.data.set('value',this.parent.parent.data.get("formModel")[prop]);
+            return this.parent.parent.data.get("formModel")[prop];
+        },
+
+        /**
+         * 获取form
+         * @returns {Window}
+         */
+        getForm(){
+            this.data.set('form',this.parent.parent);
+        },
+
+        getRules(){
+            let rules;
+            /**
+             * 若form-item中存在rule则返回form-item中的rule，否则尝试寻找form中的rule是否有该表单项的，若有返回，没有，返回undefined
+             */
+            try{
+
+                if(( rules = this.data.get('rules')) !== undefined){
+                    return rules;
+                }else if((rules = this.data.get('parent').data.get('rules')[this.data.get('prop')]) !== undefined){
+                    return rules;
+                }else{
+                    return undefined;
+                }
+
+            }catch(e) {
+                console.log(e);
+            }
+        },
+
+        reset(){
+
+            let label = this.data.get('prop');
+            this.data.get('form').data.set(`formModel.${label}`,"");
+
+        },
+
+        disposed(){
+            /**
+             * 当组件销毁时，从其父组件中注销
+             */
+
+            this.dispatch("delete-form-item",this);
+        }
+    }
+</script>
+
+<style scoped>
+    .san-form-label-left{
+        float: left;
+        text-align: center;
+    }
+    .san-form-label-right{
+        float: right;
+        text-align: center;
+    }
+    .san-form-item-top{
+        line-height: 30px;
+        text-align: center;
+    }
+    .san-form-item{
+        width:350px;
+        line-height: 30px;
+    }
+    .san-form-required{
+        color:red;
+    }
+</style>
