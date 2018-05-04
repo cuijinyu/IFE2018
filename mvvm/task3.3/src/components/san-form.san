@@ -14,7 +14,7 @@
                 rules:{},
                 labelPosition:undefined,//标签位置，可能为三个值left、top或者为right
                 formStatus:'notValidated',
-                valid:false//内容有效状态，默认为有效
+                valid:true//内容有效状态，默认为有效
             }
         },
         async validate(callback){
