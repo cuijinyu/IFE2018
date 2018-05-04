@@ -242,14 +242,14 @@
     .san-form-label-right{
         float: right;
         text-align: center;
-        margin-right: 30px;
+        margin-right: calc(50% - 200px);
     }
     .san-form-item-top{
         line-height: 30px;
         text-align: center;
     }
     .san-form-item{
-        width:calc(300px + 30%);
+        width:calc(300px + 35%);
         line-height: 30px;
         margin-top:10px;
         margin-bottom:10px;
