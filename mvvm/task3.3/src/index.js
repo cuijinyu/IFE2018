@@ -9,7 +9,8 @@ var MyApp = san.defineComponent({
     <p>{{value}}</p>
        <san-form
             formModel="{=formModel=}"
-            san-ref="formModel">
+            san-ref="formModel"
+            labelPosition="left">
             <san-form-item
                 rules="{{ruleMobile}}"
                 prop="mobile"
@@ -150,6 +151,9 @@ var MyApp = san.defineComponent({
                 console.log(valid)
             }
         });
+        this.ref(formName).validateField('mobile').then(row=>{
+            console.log(row);
+        })
     },
     resetForm(formName) {
         this.ref(formName).resetFields();

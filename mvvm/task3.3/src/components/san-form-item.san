@@ -50,7 +50,7 @@
                 this.data.set('type','input');
             },
             'init-form-button':function (message) {
-                console.log('button');
+
                 this.data.set('type','button');
             }
         },
@@ -76,10 +76,7 @@
          */
         hasRules(){
             let prop = this.data.get('prop');
-            console.log(prop)
-            console.log(`this rule------------>${this.data.get('rules')}`);
-            console.log(`outer rule------------->${this.data.get('form').data.get('rules').hasOwnProperty(prop)}`);
-            console.log(prop)
+
             if(this.data.get('rules') !== undefined||this.data.get('form').data.get('rules').hasOwnProperty(prop)){
                 return true;
             }else
@@ -115,60 +112,64 @@
             });
         },
         validate(){
-
             let _this = this;
-            let flag = true;
+            let flag;
 
-            if(this.data.get('type') == 'button'){
-                /**
-                 * 不对button做验证
-                 */
-                return ;
-            }
-
-            if(this.data.get('require') == true){
-                console.log(this.getPropValue(this.data.get('prop'))+'!!!!');
-                if(this.getPropValue(this.data.get('prop'))==''){
-                    this.data.set('validateStatus','validateWrong');
-                    this.data.set('error','必选项');
-                    _this.data.set('validateStatus','validateWrong');
-                    flag = false;
-                    return flag;
+            return new Promise((resolve,reject)=>{
+                if(this.data.get('type') == 'button'){
+                    /**
+                     * 不对button做验证
+                     */
+                    return ;
                 }
-            }
 
+                if(this.data.get('require') == true){
 
-            if(!this.hasRules()){
-                /**
-                 * 如果没有验证规则，则返回
-                 */
-                return ;
-            }
-
-
-            this.execValidate().then(function (row) {
-                if(row == null){
-                    _this.data.set('validateStatus','notValidated');
-                }else{
-                    console.log(row);
-                    _this.data.set('validateStatus','validateWrong');
-                    flag = false;
-
-                    let tempText = "";
-
-                    row.forEach(ele=>{
-                        tempText += ele.message+'|';
-                    });
-
-                    tempText = tempText.slice(0,tempText.length-1);
-
-                    _this.data.set('error',tempText);
-
-                    _this.dispatch('san-form-valid-wrong',_this);
+                    if(this.getPropValue(this.data.get('prop'))==''){
+                        this.data.set('validateStatus','validateWrong');
+                        this.data.set('error','必选项');
+                        _this.data.set('validateStatus','validateWrong');
+                        flag = false;
+                        return flag;
+                    }
                 }
+
+
+                if(!this.hasRules()){
+                    /**
+                     * 如果没有验证规则，则返回
+                     */
+                    return ;
+                }
+
+
+                this.execValidate().then(function (row) {
+                    if(row == null){
+                        _this.data.set('validateStatus','notValidated');
+                    }else{
+
+                        _this.data.set('validateStatus','validateWrong');
+                        flag = false;
+
+                        let tempText = "";
+
+                        row.forEach(ele=>{
+                            tempText += ele.message+'|';
+                        });
+
+                        tempText = tempText.slice(0,tempText.length-1);
+
+                        _this.data.set('error',tempText);
+
+                        _this.dispatch('san-form-valid-wrong',_this);
+                    }
+                }).then(function () {
+
+                        resolve(flag);
+
+                })
+
             })
-
-            return flag;
 
         },
 
@@ -206,7 +207,7 @@
                 }
 
             }catch(e) {
-                // console.log(e);
+                console.log(e);
             }
         },
 
@@ -241,13 +242,14 @@
     .san-form-label-right{
         float: right;
         text-align: center;
+        margin-right: 30px;
     }
     .san-form-item-top{
         line-height: 30px;
         text-align: center;
     }
     .san-form-item{
-        width:350px;
+        width:calc(300px + 30%);
         line-height: 30px;
         margin-top:10px;
         margin-bottom:10px;

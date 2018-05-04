@@ -17,24 +17,22 @@
                 valid:false//内容有效状态，默认为有效
             }
         },
-        validate(callback){
+        async validate(callback){
             /**
              *
              * 表单验证
              *
              */
-            this.data.get('formItem').forEach(ele=>{
-                ele.validate();
-            })
+            await this.data.get('formItem').forEach(ele=>{
+               ele.validate();
+            });
 
             let valid = this.data.get('valid');
 
-            //延迟验证，防止异步验证导致错误出现
-            //应该改为promise来达到优美的目的
-            setTimeout(callback.call(this,valid),200);
-
+            callback.call(this,valid);
             this.data.set('valid',true);
         },
+
         attached(){
               this.data.get('formItem').forEach(ele=>{
 
@@ -48,18 +46,24 @@
 
               })
         },
-        validateField(prop){
+
+        async validateField(prop){
             /**
              *
              * 验证表单的单一控件，prop为item的字段
              *
              */
             let flag;
+            let targetElement;
+
             this.data.get('formItem').forEach(ele=>{
                 if(ele.data.get('prop') == prop){
-                    flag = ele.validate();
+                    targetElement = ele;
                 }
             });
+
+            flag = await targetElement.validate();
+
             return flag;
         },
         resetFields(){
