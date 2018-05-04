@@ -54,11 +54,13 @@
              * 验证表单的单一控件，prop为item的字段
              *
              */
+            let flag;
             this.data.get('formItem').forEach(ele=>{
                 if(ele.data.get('prop') == prop){
-                    ele.validate();
+                    flag = ele.validate();
                 }
-            })
+            });
+            return flag;
         },
         resetFields(){
             /**

@@ -117,6 +117,7 @@
         validate(){
 
             let _this = this;
+            let flag = true;
 
             if(this.data.get('type') == 'button'){
                 /**
@@ -131,6 +132,8 @@
                     this.data.set('validateStatus','validateWrong');
                     this.data.set('error','必选项');
                     _this.data.set('validateStatus','validateWrong');
+                    flag = false;
+                    return flag;
                 }
             }
 
@@ -149,6 +152,7 @@
                 }else{
                     console.log(row);
                     _this.data.set('validateStatus','validateWrong');
+                    flag = false;
 
                     let tempText = "";
 
@@ -163,6 +167,8 @@
                     _this.dispatch('san-form-valid-wrong',_this);
                 }
             })
+
+            return flag;
 
         },
 
