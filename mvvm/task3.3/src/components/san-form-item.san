@@ -128,9 +128,10 @@
                     if(this.getPropValue(this.data.get('prop'))==''){
                         this.data.set('validateStatus','validateWrong');
                         this.data.set('error','必选项');
-                        _this.data.set('validateStatus','validateWrong');
                         flag = false;
                         return flag;
+                    }else{
+                        this.data.set('validateStatus','notValidated');
                     }
                 }
 
