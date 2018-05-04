@@ -1,7 +1,29 @@
 <template>
     <div>
-        <textarea s-if="textarea" cols="30" rows="10" value="{=value=}" placeholder="{=placeholder=}" disabled="{=disabled=}" readonly="{=readonly=}" on-click="dealClick" on-focus="dealFocus" on-blur="dealBlur" on-input="dealInput"></textarea>
-        <input s-if="!textarea" class="san-input" type="text" value="{=value=}" placeholder="{=placeholder=}" disabled="{=disabled=}" readonly="{=readonly=}" on-click="dealClick" on-focus="dealFocus" on-blur="dealBlur" on-input="dealInput">
+        <textarea s-if="textarea"
+                  cols="30"
+                  rows="10"
+                  value="{=value=}"
+                  placeholder="{=placeholder=}"
+                  disabled="{=disabled=}"
+                  readonly="{=readonly=}"
+                  on-click="dealClick"
+                  on-focus="dealFocus"
+                  on-blur="dealBlur"
+                  on-input="dealInput"
+                  class="{{error?'san-input-error':''}}">
+        </textarea>
+        <input s-if="!textarea"
+               class="san-input {{error?'san-input-error':''}}"
+               type="text"
+               value="{=value=}"
+               placeholder="{=placeholder=}"
+               disabled="{=disabled=}"
+               readonly="{=readonly=}"
+               on-click="dealClick"
+               on-focus="dealFocus"
+               on-blur="dealBlur"
+               on-input="dealInput">
     </div>
 </template>
 <script>
@@ -12,8 +34,13 @@
                 placeholder:"",
                 disabled:false,
                 readonly:"",
-                textarea:false
+                textarea:false,
+                success:'pending',
+                error:false
             }
+        },
+        created(){
+          this.dispatch('init-form-input',this);
         },
         dealClick:function (e) {
             this.fire("click",e);
@@ -53,5 +80,14 @@
     }
     .san-input:disabled{
         background: rgb(249,249,249);
+    }
+    .san-input-error{
+        border-color:orangered;
+    }
+    .san-input-error:focus{
+        border-color:orangered;
+    }
+    .san-input-error:hover{
+        border-color:orangered;
     }
 </style>

@@ -1,0 +1,47 @@
+<template>
+    <div class="san-button-item-wrap">
+        <button on-click="dealClick" class="san-button-item">
+            <slot></slot>
+        </button>
+    </div>
+</template>
+
+<script>
+    export default {
+        initData:function () {
+            return{
+
+            }
+        },
+        created(){
+          this.dispatch('init-form-button',this);
+        },
+        dealClick(e){
+            this.fire('click',e);
+        }
+    }
+</script>
+
+<style scoped>
+    .san-button-item-wrap{
+        width:100px;
+        height: 40px;
+        margin-bottom: 10px;
+        margin-top:10px;
+        display: inline-block;
+    }
+    .san-button-item{
+        position: relative;
+        left:20px;
+        margin: 0 auto;
+        width:60px;
+        height: 40px;
+        background: rgb(101,140,250);
+        border:0px;
+        color:white;
+        font-family: 微软雅黑;
+    }
+    .san-button-item:hover{
+        background: rgb(99,130,240);
+    }
+</style>

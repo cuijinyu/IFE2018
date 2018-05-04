@@ -3,15 +3,20 @@
         <div class="san-form-label-wrap san-form-label-{{labelPosition}}"
              style="width:{{labelWidth}}">
             <label class="san-form-label">
-                <span s-if="require" class="san-form-required">*</span>
+                <span s-if="require"
+                      class="san-form-required">*</span>
                 {{label}}
             </label>
         </div>
         <div class="san-form-input">
             <slot></slot>
         </div>
-        <div>
-
+        <div class="san-bottom-message">
+            <div class="san-form-error-{{labelPosition}} san-form-error"
+                 s-if="validateStatus == 'validateWrong'"
+                 style="position:relative;left:{{labelWidth}}">
+                <span>{{error}}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -23,54 +28,140 @@
             return{
                 labelPosition:"left",//标签位置，默认为left
                 label:"",
-                labelWidth:"80px",
+                labelWidth:"100px",
                 prop:"",//formModel中的字段
                 require:false,//是否必填项
                 helpText:"",//帮助信息
                 rules:undefined,
-                validateState:true,//验证状态
+                validateState:false,//验证状态
                 error:undefined,//错误信息，外部传入，改变组件状态，仅作提示
                 value:"",//slot中的input表单值
                 form:undefined,//将父组件form存放于这里
                 validateStatus:'notValidated',//验证状态，默认为为验证
                 success:true,//表单正确状态，默认为true，用以判断样式
+                input:'',
+                type:undefined,
+            }
+        },
+        messages:{
+            'init-form-input':function (message) {
+                this.data.set('input',message.value);
+                this.data.get('input').data.set('placeholder',this.data.get('helpText'));
+                this.data.set('type','input');
+            },
+            'init-form-button':function (message) {
+                console.log('button');
+                this.data.set('type','button');
             }
         },
         created(){
             /**
              *  当form-item被附加到页面时，向父组件发送自己的信息
              */
-            if(this.data.get('prop') == ''){
-                throw "Please give the form item a prop"
-            }
             this.dispatch('init-form-item',this);
             this.getForm();
+            this.watch('validateStatus',function () {
+                if(this.data.get('validateStatus') == 'validateWrong') {
+                    this.data.get('input').data.set('error', true);
+                }else if(this.data.get('validateStatus') == 'notValidated'){
+                    this.data.get('input').data.set('error', false);
+                }else if(this.data.get('validateStatus') == 'validateSuccess') {
+                    this.data.get('input').data.set('error', false);
+                }
+            });
         },
 
+        /**
+         * 用以判断该输入框是否有验证规则
+         */
+        hasRules(){
+            let prop = this.data.get('prop');
+            console.log(prop)
+            console.log(`this rule------------>${this.data.get('rules')}`);
+            console.log(`outer rule------------->${this.data.get('form').data.get('rules').hasOwnProperty(prop)}`);
+            console.log(prop)
+            if(this.data.get('rules') !== undefined||this.data.get('form').data.get('rules').hasOwnProperty(prop)){
+                return true;
+            }else
+                return false;
+        },
+
+        execValidate(){
+            return new Promise((resolve,reject)=>{
+                this.data.set('validateStatus','validatePause');
+                let value = this.getPropValue(this.data.get('prop')),
+                    rule = this.getRules();
+
+                let label = this.data.get('prop');
+                let descriptor = {};
+
+                descriptor[label] = rule;
+
+                let validator = new schema(descriptor),
+                    input = {};
+
+                input[label] = this.getPropValue(this.data.get('prop'));
+
+                validator.validate(input,(error,fields)=>{
+
+                    if(error){
+                        resolve(error);
+
+                    }else{
+                        resolve(null);
+                    }
+
+                })
+            });
+        },
         validate(){
-            this.data.set('validateStatus','validatePause');
-            let value = this.getPropValue(this.data.get('prop')),
-                rule = this.getRules();
 
-            let label = this.data.get('prop');
-            let descriptor = {};
+            let _this = this;
 
-            descriptor[label] = rule;
+            if(this.data.get('type') == 'button'){
+                /**
+                 * 不对button做验证
+                 */
+                return ;
+            }
 
-            let validator = new schema(descriptor),
-                input = {};
-
-            input[label] = this.getPropValue(this.data.get('prop'));
-
-            validator.validate(input,(error,fields)=>{
-
-                if(error){
-                    console.log(error);
+            if(this.data.get('require') == true){
+                console.log(this.getPropValue(this.data.get('prop'))+'!!!!');
+                if(this.getPropValue(this.data.get('prop'))==''){
                     this.data.set('validateStatus','validateWrong');
-                }else{
-                    this.data.set('validateStatus','validateSuccess');
+                    this.data.set('error','必选项');
+                    _this.data.set('validateStatus','validateWrong');
                 }
+            }
 
+
+            if(!this.hasRules()){
+                /**
+                 * 如果没有验证规则，则返回
+                 */
+                return ;
+            }
+
+
+            this.execValidate().then(function (row) {
+                if(row == null){
+                    _this.data.set('validateStatus','notValidated');
+                }else{
+                    console.log(row);
+                    _this.data.set('validateStatus','validateWrong');
+
+                    let tempText = "";
+
+                    row.forEach(ele=>{
+                        tempText += ele.message+'|';
+                    });
+
+                    tempText = tempText.slice(0,tempText.length-1);
+
+                    _this.data.set('error',tempText);
+
+                    _this.dispatch('san-form-valid-wrong',_this);
+                }
             })
 
         },
@@ -109,14 +200,20 @@
                 }
 
             }catch(e) {
-                console.log(e);
+                // console.log(e);
             }
         },
 
         reset(){
 
+            //如果表单内组件是button
+            if(this.data.get('type') == 'button'){
+                return ;
+            }
+
             let label = this.data.get('prop');
             this.data.get('form').data.set(`formModel.${label}`,"");
+            this.data.set('validateStatus','notValidated');
 
         },
 
@@ -146,8 +243,24 @@
     .san-form-item{
         width:350px;
         line-height: 30px;
+        margin-top:10px;
+        margin-bottom:10px;
     }
     .san-form-required{
         color:red;
+    }
+    .san-form-error{
+        color:red;
+    }
+    .san-form-error-right{
+        position: relative;
+        left:0px !important;
+    }
+    .san-form-error-top{
+        position: relative;
+        left:0px !important;
+    }
+    .san-bottom-message{
+        min-height: 30px;
     }
 </style>
