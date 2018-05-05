@@ -15,7 +15,11 @@
             <div class="san-form-error-{{labelPosition}} san-form-error"
                  s-if="validateStatus == 'validateWrong'"
                  style="position:relative;left:{{labelWidth}}">
-                <span>{{error}}</span>
+                <span>
+                    <img src="{{infoPic}}"
+                           style="width:15px;height: 15px;margin-right: 5px;">
+                    {{error}}
+                </span>
             </div>
         </div>
     </div>
@@ -23,9 +27,11 @@
 
 <script>
     import schema from 'async-validator';
+    import infoPic from '../assert/img/info.png';
     export default {
         initData:function () {
             return{
+                infoPic,
                 labelPosition:"left",//标签位置，默认为left
                 label:"",
                 labelWidth:"100px",
@@ -238,11 +244,11 @@
 <style scoped>
     .san-form-label-left{
         float: left;
-        text-align: center;
+        text-align: left;
     }
     .san-form-label-right{
         float: right;
-        text-align: center;
+        text-align: right;
         margin-right: calc(50% - 200px);
     }
     .san-form-item-top{
