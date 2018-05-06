@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task8</title>
+	<script type="text/javascript" src="lottie.js"></script>
+	<style>
+		#play{
+			width:400px;
+			height: 300px;
+		}
+	</style>
+</head>
+<body>
+	<div id="play"></div>
+	<script>
+		let player = document.getElementById('play');
+		lottie.loadAnimation({
+			container:player,
+			renderer:'svg',
+			loop:true,
+			autoplay:true,
+			path:'./data.json'
+		})
+	</script>
+</body>
+</html>
