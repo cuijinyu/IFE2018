@@ -120,13 +120,15 @@
             	border-bottom-color:rgb(13,138,238);
             }
             .input__down{
+                position: relative;
+                top:-1px;
             	height: 1px;
             	width:0px;
-            	transition: 0.5s;
+                transition: all 0.5s;
             }
             .form__input:focus + .input__down{
             	background-color:rgb(13,138,238);
-            	width:320px;
+            	width:346px;
             }
 
         </style>
@@ -167,6 +169,7 @@
 
     		inputs.each((index,ele)=>{
     			$(ele).blur(function(){
+                $(".input__down").css("transition", "");
     				for(let i = 0;i < inputs.length;i++){
 							if($(inputs[i]).val()!==''){
 		    					$(inputs[i]).next().next().css("transform","translateY(-10px) scale(0.9,0.9) translateX(-10px)");
