@@ -1,0 +1,51 @@
+<template>
+    <div class="san-cascader-menu-item">
+        <li class="san-cascader-menu-item-li">
+            {{label|cut}}
+            <i class="arrow"><img src="{{arrowPic}}" alt=""></i>
+        </li>
+    </div>
+</template>
+
+<script>
+    import arrowPic from '../assert/img/arrow.png';
+    export default {
+        initData:function () {
+            return{
+                label:'',
+                disabled:false,
+                value:'',
+                arrowPic,
+            }
+        },
+        fliters:{
+            cut:function (message) {
+                    return message.slice(0,12);
+            }
+        }
+    }
+</script>
+
+<style scoped>
+    .san-cascader-menu-item{
+        width:160px;
+        text-align: center;
+        height: 30px;
+        line-height: 30px;
+        font-weight: 400;
+        font-family: 微软雅黑;
+        border-radius: 2px;
+    }
+    .san-cascader-menu-item:hover{
+        cursor:hand;
+        background: #f7f2f6;
+        color: #409EFF;
+    }
+    .arrow img{
+        margin-top:10px;
+        width:10px;
+        height: 10px;
+        float:right;
+        margin-right: 5px;
+    }
+</style>

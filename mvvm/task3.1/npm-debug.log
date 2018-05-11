@@ -1,0 +1,52 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\崔晋瑜\\AppData\\Roaming\\npm\\node_modules\\cnpm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   '--userconfig=C:\\Users\\崔晋瑜\\.cnpmrc',
+1 verbose cli   '--disturl=https://npm.taobao.org/mirrors/node',
+1 verbose cli   '--registry=https://registry.npm.taobao.org',
+1 verbose cli   'run',
+1 verbose cli   'dev' ]
+2 info using npm@3.10.10
+3 info using node@v8.2.1
+4 verbose run-script [ 'predev', 'dev', 'postdev' ]
+5 info lifecycle task1.2@1.0.0~predev: task1.2@1.0.0
+6 silly lifecycle task1.2@1.0.0~predev: no script for predev, continuing
+7 info lifecycle task1.2@1.0.0~dev: task1.2@1.0.0
+8 verbose lifecycle task1.2@1.0.0~dev: unsafe-perm in lifecycle true
+9 verbose lifecycle task1.2@1.0.0~dev: PATH: C:\Users\崔晋瑜\AppData\Roaming\npm\node_modules\cnpm\node_modules\npm\bin\node-gyp-bin;D:\nodejs包教不包会\IFE2018\mvvm\task2.3\node_modules\.bin;c:\program files\graphicsmagick-1.3.26-q16;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Users\崔晋瑜\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk1.8.0_92\bin;C:\Users\崔晋瑜\AppData\Local\Programs\Python\Python35;C:;Program Files\nodejs\;C:\Program Files (x86)\Git\cmd;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;D:\sdk\tools;C:\Pytho;C:\Program Files\nodejs\;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Users\崔晋瑜\AppData\Local\Programs\Python\Python37;C:\Users\崔晋瑜\AppData\Local\Programs\Python\Python37\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\MinGW\bin;C:\Program Files (x86)\Pandoc\;D:\opencvLib\opencv\build\x64\vc14\bin;C:\Users\崔晋瑜\AppData\Local\Microsoft\WindowsApps;C:\Users\崔晋瑜\AppData\Local\atom\bin;D:\Microsoft VS Code\bin;C:\Users\崔晋瑜\AppData\Local\Microsoft\WindowsApps;D:\sdk\platform-tools;C:\Users\崔晋瑜\AppData\Roaming\npm;C:\Program Files\MySQL\MySQL Server 5.7\bin;
+10 verbose lifecycle task1.2@1.0.0~dev: CWD: D:\nodejs包教不包会\IFE2018\mvvm\task2.3
+11 silly lifecycle task1.2@1.0.0~dev: Args: [ '/d /s /c',
+11 silly lifecycle   'webpack-dev-server --open --config webpack.dev.js' ]
+12 silly lifecycle task1.2@1.0.0~dev: Returned: code: 3221225786  signal: null
+13 info lifecycle task1.2@1.0.0~dev: Failed to exec dev script
+14 verbose stack Error: task1.2@1.0.0 dev: `webpack-dev-server --open --config webpack.dev.js`
+14 verbose stack Exit status 3221225786
+14 verbose stack     at EventEmitter.<anonymous> (C:\Users\崔晋瑜\AppData\Roaming\npm\node_modules\cnpm\node_modules\npm\lib\utils\lifecycle.js:255:16)
+14 verbose stack     at emitTwo (events.js:125:13)
+14 verbose stack     at EventEmitter.emit (events.js:213:7)
+14 verbose stack     at ChildProcess.<anonymous> (C:\Users\崔晋瑜\AppData\Roaming\npm\node_modules\cnpm\node_modules\npm\lib\utils\spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:125:13)
+14 verbose stack     at ChildProcess.emit (events.js:213:7)
+14 verbose stack     at maybeClose (internal/child_process.js:921:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+15 verbose pkgid task1.2@1.0.0
+16 verbose cwd D:\nodejs包教不包会\IFE2018\mvvm\task2.3
+17 error Windows_NT 10.0.16299
+18 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\崔晋瑜\\AppData\\Roaming\\npm\\node_modules\\cnpm\\node_modules\\npm\\bin\\npm-cli.js" "--userconfig=C:\\Users\\崔晋瑜\\.cnpmrc" "--disturl=https://npm.taobao.org/mirrors/node" "--registry=https://registry.npm.taobao.org" "run" "dev"
+19 error node v8.2.1
+20 error npm  v3.10.10
+21 error code ELIFECYCLE
+22 error task1.2@1.0.0 dev: `webpack-dev-server --open --config webpack.dev.js`
+22 error Exit status 3221225786
+23 error Failed at the task1.2@1.0.0 dev script 'webpack-dev-server --open --config webpack.dev.js'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the task1.2 package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     webpack-dev-server --open --config webpack.dev.js
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs task1.2
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls task1.2
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]

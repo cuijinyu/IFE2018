@@ -1,0 +1,49 @@
+<template>
+    <div>
+        <div>
+            <select class="san-cascader-select" on-click="handleClick"></select>
+        </div>
+        <div>
+            <san-cascader-menu info="{=options=}"
+                               disabled="{=disabled=}"
+                               class=""
+                               s-if="showFlag"></san-cascader-menu>
+        </div>
+    </div>
+</template>
+
+<script>
+    import sanCascaderMenu from './san-cascader-menu.san';
+    export default {
+        initData:function() {
+            return{
+                options:[],
+                disabled:false,//是否禁用
+                showFlag:false,//是否打开下拉
+            }
+        },
+        messages: {
+
+        },
+        components: {
+            'san-cascader-menu':sanCascaderMenu,
+        },
+        handleClick() {
+            this.data.set('showFlag',!this.data.get('showFlag'));
+        }
+    }
+</script>
+
+<style scoped>
+    .san-cascader-select{
+        width:160px;
+        height: 30px;
+        line-height: 30px;
+        border-radius:3px;
+        border:1px solid rgba(0,0,0,0.2);
+        transition: all 1s;
+    }
+    .san-cascader-select:hover{
+        border:1px solid rgba(0,0,0,0.4);
+    }
+</style>

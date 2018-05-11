@@ -1,0 +1,55 @@
+<template>
+    <span>
+        <ul class="san-cascader-menu-panel">
+            <san-cascader-menu-item s-for="item in info"
+                                    disabled="item.disabled"
+                                    label="{{item.label}}">
+            </san-cascader-menu-item>
+        </ul>
+        <div s-for="i in info"
+             class="san-cascader-menu">
+            <san-cascader-menu s-if="i.children"
+                               info="{{i.children}}">
+            </san-cascader-menu>
+        </div>
+    </span>
+</template>
+
+<script>
+    import sanCascaderMenuItem from './san-cascader-menu-item.san';
+    export default {
+        initData:function() {
+            return{
+                info:{},
+            }
+        },
+        components:{
+            'san-cascader-menu':'self',
+            'san-cascader-menu-item':sanCascaderMenuItem
+        }
+    }
+</script>
+
+<style scoped>
+    .san-cascader-menu{
+        margin-left:160px;
+        position:absolute;
+    }
+    .san-cascader-menu-panel{
+        border:1px solid rgba(0,0,0,0.2);
+        width:160px;
+        height: 200px;
+        border-radius: 5px;
+        list-style: none;
+        padding:0px;
+        margin:0px;
+        background: white;
+        box-shadow: 0px 0px 10px #eae5e9;
+    }
+    .san-cascader-menu-panel ul{
+        width:160px;
+    }
+    ul{
+        float:left;
+    }
+</style>
