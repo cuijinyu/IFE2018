@@ -1,30 +1,35 @@
 <template>
     <span>
         <ul class="san-cascader-menu-panel">
-            <san-cascader-menu-item s-for="item in info"
+            <san-cascader-menu-item s-for="item,index in info"
                                     disabled="{{item.disabled}}"
                                     label="{{item.label}}"
                                     info="{{item}}"
-                                    showArrow="{=item.hasSub=}"
-                                    on-click="handleClick">
+                                    on-click="handleClick(index)">
             </san-cascader-menu-item>
         </ul>
-        <div s-for="i in info"
+        <div s-for="i,idx in info"
              class="san-cascader-menu">
             <san-cascader-menu s-if="i.children"
-                               info="{{i.children}}">
+                               class="san-cascader-menu-disapear"
+                               info="{{i.children}}"
+                               s-transition="hook('slide')">
             </san-cascader-menu>
         </div>
     </span>
 </template>
 
 <script>
+    import {transition} from 'san-transition';
     import sanCascaderMenuItem from './san-cascader-menu-item.san';
     export default {
         initData:function() {
             return{
                 info:{},
-                items:[]
+                items:[],
+                level:10,//z-index
+                menus:[],
+                showFlag:false,
             }
         },
         attached() {
@@ -41,6 +46,8 @@
                 }
             })
 
+            this.dispatch('menu-init',this);
+
         },
         components: {
             'san-cascader-menu':'self',
@@ -53,10 +60,35 @@
         messages:{
             'item-inited':function (message) {
                 this.data.push('items',message.value);
+            },
+            'menu-init':function (message) {
+                this.data.push('menus',message.value);
             }
         },
-        handleClick(){
+        handleClick(index) {
 
+            dispearAll(this);
+
+            this.data.get(`menus[${index}]`).data.set('level',this.data.get('level')+1);
+            this.data.get(`menus[${index}]`).data.set('class','san-cascader-menu-show');
+
+            this.data.set('level',this.data.get('level')+1);
+            this.data.get(`menus[${index}]`).el.setAttribute('style',`z-index:${this.data.get('level')+1}`);
+        },
+        hook:transition
+    }
+
+    /**
+     * 利用递归清除所有的样式
+     * @param ele
+     */
+    function dispearAll(ele) {
+        let subMenu;
+        if((subMenu = ele.data.get('menus')).length>0){
+            subMenu.forEach(e => {
+                e.data.set('class','san-cascader-menu-disapear');
+                dispearAll(e);
+            })
         }
     }
 </script>
@@ -82,5 +114,22 @@
     }
     ul{
         float:left;
+    }
+    .slide-enter, .slide-leave {
+        transition: all 0.5s;
+    }
+    .slide-enter, .slide-before-leave {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    .slide-before-enter, .slide-leave {
+        opacity: 0;
+        transform: translate(100px, 0);
+    }
+    .san-cascader-menu-show{
+
+    }
+    .san-cascader-menu-disapear{
+        display: none;
     }
 </style>

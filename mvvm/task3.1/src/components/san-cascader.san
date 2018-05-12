@@ -7,13 +7,14 @@
         <div>
             <san-cascader-menu info="{=options=}"
                                disabled="{=disabled=}"
-                               class=""
-                               s-if="showFlag"></san-cascader-menu>
+                               s-if="showFlag"
+                               s-transition="hook('slide')"></san-cascader-menu>
         </div>
     </div>
 </template>
 
 <script>
+    import {transition} from 'san-transition';
     import sanCascaderMenu from './san-cascader-menu.san';
     export default {
         initData:function() {
@@ -31,7 +32,8 @@
         },
         handleClick() {
             this.data.set('showFlag',!this.data.get('showFlag'));
-        }
+        },
+        hook:transition
     }
 </script>
 
@@ -46,5 +48,16 @@
     }
     .san-cascader-select:hover{
         border:1px solid rgba(0,0,0,0.4);
+    }
+    .slide-enter, .slide-leave {
+        transition: all 0.5s;
+    }
+    .slide-enter, .slide-before-leave {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+    .slide-before-enter, .slide-leave {
+        opacity: 0;
+        transform: translate(100px, 0);
     }
 </style>
