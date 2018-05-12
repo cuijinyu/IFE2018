@@ -1,7 +1,8 @@
 <template>
     <div>
         <div>
-            <select class="san-cascader-select" on-click="handleClick"></select>
+            <select class="san-cascader-select"
+                    on-click="handleClick"></select>
         </div>
         <div>
             <san-cascader-menu info="{=options=}"

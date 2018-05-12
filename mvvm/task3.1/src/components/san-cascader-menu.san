@@ -2,8 +2,11 @@
     <span>
         <ul class="san-cascader-menu-panel">
             <san-cascader-menu-item s-for="item in info"
-                                    disabled="item.disabled"
-                                    label="{{item.label}}">
+                                    disabled="{{item.disabled}}"
+                                    label="{{item.label}}"
+                                    info="{{item}}"
+                                    showArrow="{=item.hasSub=}"
+                                    on-click="handleClick">
             </san-cascader-menu-item>
         </ul>
         <div s-for="i in info"
@@ -21,11 +24,39 @@
         initData:function() {
             return{
                 info:{},
+                items:[]
             }
         },
-        components:{
+        attached() {
+
+            //让有下级菜单的元素显示箭头图标
+            let items = this.data.get('items');
+            items.forEach(ele => {
+                if(ele.data.get('info').hasOwnProperty('children')){
+                    ele['hasSub'] = true;
+                    ele.data.set("info['hasSub']",true);
+                }else{
+                    ele['hasSub'] = false;
+                    ele.data.set("info['hasSub']",false);
+                }
+            })
+
+        },
+        components: {
             'san-cascader-menu':'self',
             'san-cascader-menu-item':sanCascaderMenuItem
+        },
+        arrowShow(message) {
+            console.log(message);
+            return message.hasOwnProperty('children');
+        },
+        messages:{
+            'item-inited':function (message) {
+                this.data.push('items',message.value);
+            }
+        },
+        handleClick(){
+
         }
     }
 </script>

@@ -1,8 +1,9 @@
 <template>
-    <div class="san-cascader-menu-item">
+    <div class="san-cascader-menu-item" on-click="handleClick(e)">
         <li class="san-cascader-menu-item-li">
-            {{label|cut}}
-            <i class="arrow"><img src="{{arrowPic}}" alt=""></i>
+            {{ label | cut }}
+            <i class="arrow"
+               s-if="info.hasSub"><img src="{{arrowPic}}" alt=""></i>
         </li>
     </div>
 </template>
@@ -16,12 +17,21 @@
                 disabled:false,
                 value:'',
                 arrowPic,
+                info:undefined,
+                showArrow:undefined,
             }
         },
-        fliters:{
+        created(){
+            this.dispatch('item-inited',this);
+        },
+        filters:{
             cut:function (message) {
-                    return message.slice(0,12);
+                    return message.slice(0,15);
             }
+        },
+        handleClick(e){
+
+            this.fire('click',e);
         }
     }
 </script>
